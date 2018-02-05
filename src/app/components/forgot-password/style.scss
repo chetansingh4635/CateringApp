@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'Tawtini';
+    src: url('../../../assets/fonts/AsiyahScript.ttf');
+}
+
+$tawtiniColor : #273e78;
+
+.login-background {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    .theme-art {
+        width: calc(100% - 30vw);
+        height: 100vh;
+        overflow: hidden;
+        position: absolute;
+        left: 0px;
+        .logo {
+            font-family: 'Tawtini';
+            font-size: 70px;
+            padding: 20px;
+            color: $tawtiniColor;
+        }
+        img {
+            width: 100%;
+        }
+    }
+    .login-container {
+        position: absolute;
+        right: 0px;
+        width: 30vw;
+        height: 100%;
+        padding: 20px;
+        background-color: $tawtiniColor;
+        box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.5);
+        .form-container {
+            width: 80%;
+            .form-input {
+                margin: 10px 0px;
+                md-input-container {
+                    .mat-input-wrapper { margin-bottom: 1px;}
+                    width: 100%;
+                }
+                .form-validation-message {
+                    text-align: left;
+                      color: #CC0000;
+                    font-size: 15px;
+                    height: 10px;
+                }
+            }
+            .form-submit {
+                margin-top: 20px;
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666">{{title}}</span>
+        <div>
+            <button md-button (click)="uploadAllTheData()"><span style="color: #03a9f4;">{{arabicText.SAVE}}</span></button>
+            <button md-button (click)="cancel()"><span style="color: #666666;">{{arabicText.CANCEL}}</span></button>
+        </div>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Location form-->
+            <div formGroupName="shopItems">
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput type="text" maxlength="40"  placeholder="{{arabicText.TITLE}}" formControlName="title">
+                    </md-input-container>
+                    <div class="input col-md-12 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].shopItems['controls'].title.errors && form['controls'].shopItems['controls'].title.errors?.required">
+                        {{arabicText.errors.Title_is_required}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput type="number" placeholder="{{arabicText.PRICE}}{{arabicText.SAR}}" formControlName="price">
+                    </md-input-container>
+                    <div class="input col-md-12 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].shopItems['controls'].price.errors && form['controls'].shopItems['controls'].price.errors?.required">
+                       {{arabicText.Price_Required}}
+                    </span>
+                        <span *ngIf="form['controls'].shopItems['controls'].price.errors && form['controls'].shopItems['controls'].price.errors?.pattern && !form['controls'].shopItems['controls'].price.errors?.required">
+                         {{arabicText.Price_Must_Between}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <textarea mdInput rows="3" placeholder="{{arabicText.DESCRIPTION}}" maxlength="500" type="text" formControlName="description"></textarea>
+                    </md-input-container>
+                    <div class="input col-md-12 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].shopItems['controls'].description.errors && form['controls'].shopItems['controls'].description.errors?.required">
+                        {{arabicText.errors.Description_is_required}}
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--Cover Image Square-->
+        <div class="col-md-6">
+            <div>
+                <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-weight: 600;">{{arabicText.COVER_IMAGE}}</span>
+                    <div>
+                        <button md-button (click)="clearImage(0,'cover')" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                    </div>
+                </div>
+                <div id="coverSquare" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: auto 100%;background-repeat: no-repeat; height: 300px;"></div>
+                <input type="file" accept="image/x-png,image/jpeg" style="position: absolute; top: 51px; width: 100%; height: 300px; opacity: 0; cursor: pointer;"
+                    (change)="extractImage($event,0,'cover')" />
+            </div>
+
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>
+<md-spinner *ngIf="showLoader" class="loader"></md-spinner>

@@ -1,0 +1,111 @@
+<md-tab-group (selectChange)="tabVideoSelected($event)">
+    <md-tab label="General Info." style="overflow-y: hidden;">
+        <div class="container-fluid">
+            <div class="col-md-12" style="padding-bottom: 20px;padding-top: 20px">
+                <span style="font-weight: 400; font-size: large; color: #666666">{{title}}</span>
+                <button type="button" (click)="addChefNavigate()" style="float: right;" class="btn btn-primary">{{arabicText.Add_Chef}}</button>
+                <button md-button style="float: right;    margin-right: 20px;" routerLink='/business/food/update/{{businessId}}'><span style="color: #03a9f4;">{{arabicText.EDIT}}</span></button>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    {{arabicText.TITLE}}: {{businessFoodDetails.foodDetails.title}}
+                </div>
+                <div style="margin-top: 20px">
+                    {{arabicText.DESCRIPTION}}: <pre>{{businessFoodDetails.foodDetails.description}}</pre>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>{{arabicText.COVER_IMAGE}}</label>
+                <img [src]="getImagePath(businessFoodDetails.foodDetails.coverImage)" alt="..." class="img-thumbnail">
+            </div>
+            <div class="col-md-3">
+                <label>{{arabicText.COVER_IMAGE_SQUARE}}</label>
+                <img [src]="getImagePath(businessFoodDetails.foodDetails.coverImageSquare)" alt="..." class="img-thumbnail">
+            </div>
+            <div class="col-md-12" style="padding-bottom: 20px" *ngIf="businessFoodDetails.foodDetails.panaromicImage.length >0">
+                <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.Panoramic_images}}</span>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-3" *ngFor="let panoramic of businessFoodDetails.foodDetails.panaromicImage">
+                    <img [src]="getImagePath(panoramic)" alt="..." class="img-thumbnail">
+                </div>
+            </div>
+            <div class="col-md-12" style="padding-top: 20px" *ngIf="businessFoodDetails.foodDetails && businessFoodDetails.foodDetails.days && businessFoodDetails.foodDetails.days.length">
+                <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.DAY_WISE_TIMING}}</span>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{{arabicText.DAY}}</th>
+                        <th>{{arabicText.START_TIME}}</th>
+                        <th>{{arabicText.END_TIME}}</th>
+                    </tr>
+                    <tr *ngFor="let day of businessFoodDetails.foodDetails.days;let i = index">
+                        <td class="text-capitalize">{{day}}</td>
+                        <td>{{businessFoodDetails.foodDetails.dayWiseTiming[day].startTime}}</td>
+                        <td>{{businessFoodDetails.foodDetails.dayWiseTiming[day].endTime}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12" style="padding-top: 20px;padding-bottom: 20px" *ngIf="businessFoodDetails.chef.length >0">
+                <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.Manage_Chef}}</span>
+            </div>
+            <div class="col-md-12" style="cursor: pointer">
+                <div class="col-md-4" *ngFor="let chef of businessFoodDetails.chef;let i = index;">
+                    <img [src]="getImagePath(chef.image)" (click)="navigateToChef(chef._id)" style="    height: 250px;" alt="..." class="img-thumbnail">
+                    <div (click)="navigateToChef(chef._id)">
+                        <span>{{arabicText.NAME}}: {{chef.name}}</span>
+                    </div>
+                    <div>
+                        <md-slide-toggle [color]="'primary'" style="display: inline-flex; float:left;margin-top:6px" [(ngModel)]="chef.isActive"
+                            (change)="setActiveInactive($event, chef)">{{arabicText.ACTIVE}}</md-slide-toggle>
+                        <button md-button style="float: right;" (click)="navigateToChef(chef._id)"><span style="color: #03a9f4;">{{arabicText.DETAILS}}</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-tab>
+    <md-tab label="Images">
+        <div class="container-fluid">
+            <div class="col-md-3" style="margin-top: 20px;margin-bottom: 20px" *ngFor="let images of businessFoodDetails.images;let i = index;">
+                <div style="margin-bottom: 10px">
+                    <span>{{arabicText.Menu}}: {{images.name}}</span>
+                </div>
+                <img [src]="getImagePath(images.coverImageSquare)" style="    height: 150px;" alt="..." class="img-thumbnail">
+                 <md-slide-toggle [color]="'primary'" style="display: inline-flex; margin-top: 5px;" [checked]="images.showOnDetails" (change)="openDialogVideos( i,images, 'Images', $event)">{{arabicText.Show_On_Details}}</md-slide-toggle>
+            </div>
+        </div>
+    </md-tab>
+    <md-tab label="Video">
+        <div class="container-fluid">
+            <div class="col-md-12" style=" margin-top: 25px;" *ngIf="businessFoodDetails.videos.length < 6">
+                <div>
+                    <div class="col-md-4">
+                        <md-input-container>
+                            <input mdInput placeholder="{{arabicText.Enter_YouTube_Link}}" [(ngModel)]="youtubeLinks" (keyup)="validateYouTubeUrl(youtubeLinks)">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container>
+                            <input mdInput placeholder="{{arabicText.Enter_Title}}" [(ngModel)]="youTubeTitle">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <button [disabled]="!youtubeVideoId" style="margin-bottom: 20px;" md-raised-button (click)="UploadYoutubeLink(youtubeVideoId,youTubeTitle)">{{arabicText.UPLOAD}}</button>
+                    </div>
+                    <div class="col-md-4">
+                        <youtube-player [height]="150" [width]="190" [videoId]="youtubeVideoId" *ngIf="youtubeVideoId"></youtube-player>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="margin-top: 20px;margin-bottom: 20px" *ngFor="let video of  videosList">
+                <div style="margin-bottom: 10px">
+                    <span>{{arabicText.TITLE}}: {{video.title}}</span>
+                    <i (click)="openDialogVideos(i, video._id, 'Video')" class="glyphicon glyphicon-trash" style="float:right"></i>
+                </div>
+                <div *ngIf="videosList">
+                    <youtube-player [height]="150" [width]="210" [videoId]="video.youtubeUrl"></youtube-player>
+                </div>
+            </div>
+        </div>
+    </md-tab>
+    <!--<md-tab label="Feedback"></md-tab>-->
+</md-tab-group>

@@ -1,0 +1,94 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666">{{title}}</span>
+        <div>
+            <button md-button (click)="_router.navigateByUrl('/business/edit')"><span style="color: #03a9f4;">{{arabicText.EDIT}}</span></button>
+        </div>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Location form-->
+            <div formGroupName="business">
+                <div class="col-md-12 row"  style="margin-bottom:20px ">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 500; font-size: large; color: #666666">{{arabicText.BUSINESS_DETAILS}}</span>
+                    </div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.NAME}}" maxlength="60" [readonly]="'true'" formControlName="name" style="text-transform:capitalize">
+                    </md-input-container>
+                    <div style="height: 58px;width: 100%;margin-top: -58px;opacity: 1;z-index: 9;position: absolute;"></div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.ADDRESS}}" [readonly]="'true'" formControlName="address">
+                    </md-input-container>
+                    <div style="height: 58px;width: 100%;margin-top: -58px;opacity: 1;z-index: 9;position: absolute;"></div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container class="example-full-width">
+                        <textarea mdInput placeholder="{{arabicText.DESCRIPTION}}" rows="5" maxlength="500" [readonly]="'true'" formControlName="description"></textarea>
+                    </md-input-container>
+                    <div style="height: 58px;width: 100%;margin-top: -58px;opacity: 1;z-index: 9;position: absolute;"></div>
+                </div>
+            </div>
+            <!--Cover Image-->
+            <div class="col-md-6">
+                <div>
+                    <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 600;">{{arabicText.COVER_IMAGE}}</span>
+                    </div>
+                    <div id="cover" [ngStyle]="getImagePath(businessDetails.coverImage)" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: auto 100%;background-repeat: no-repeat; height: 300px;"></div>
+                </div>
+            </div>
+           
+            <div formGroupName="manager">
+                <div class="input col-md-6">
+                    <div class="col-md-12 row">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-weight: 500; font-size: large; color: #666666">{{arabicText.PERSONAL_DETAILS}}</span>
+                        </div>
+                    </div>
+                    <div class="input col-md-12" style="margin-top: 10px">
+                        <md-input-container>
+                            <input mdInput placeholder="{{arabicText.NAME}}" [readonly]="'true'" formControlName="name">
+                        </md-input-container>
+                        <div style="height: 58px;width: 100%;margin-top: -58px;opacity: 1;z-index: 9;position: absolute;"></div>
+                    </div>
+                    <div class="input col-md-12" style="margin-top: 10px">
+                        <md-input-container>
+                            <input mdInput placeholder="{{arabicText.EMAIL}}" [readonly]="'true'" type="email" formControlName="email" [readonly]="businessId">
+                        </md-input-container>
+                        <div style="height: 58px;width: 100%;margin-top: -58px;opacity: 1;z-index: 9;position: absolute;"></div>
+                    </div>
+                    <div class="input col-md-12">
+                        <md-input-container>
+                            <input mdInput placeholder="{{arabicText.MOBILE}}" [readonly]="'true'" type="text" formControlName="mobile">
+                        </md-input-container>
+                        <div style="height: 58px;width: 100%;margin-top: -58px;opacity: 1;z-index: 9;position: absolute;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="input col-md-12" style="    font-size: 32px;">
+                <div class="input col-md-3">
+                    {{arabicText.CATEGORY}}
+                </div>
+            </div>
+            <div style="margin-top:20px;cursor: pointer" class="input col-md-3" *ngFor="let category of businessDetails.allowedCategories let i = last">
+                <md-card class="example-card" (click)="navigate(businessDetails,category)">
+                    <md-card-header>
+                        <md-card-title>{{category == 'Food' ? arabicText.FOOD : category == 'Shop' ? arabicText.SHOP : category == 'Accomodation' ? arabicText.ACCOMODATION : '' }}</md-card-title>
+                    </md-card-header>
+                    <img md-card-image [src]="imageUrl(businessDetails,category)" style="height: 128px;max-width: 100%;margin:0px;">
+                </md-card>
+                <div *ngIf="category == 'Food' && businessDetails.food ? true : category == 'Accomodation' && businessDetails.accomodation ? true : category == 'Shop' && businessDetails.shop ? true : false">
+                    <md-slide-toggle [color]="'primary'" style="float: left;margin-top: 20px" [checked]="checkActiveOrInavtive(businessDetails,category)"
+                        (change)="setActiveInActive($event, businessDetails,category)">{{arabicText.ACTIVE}}</md-slide-toggle>
+                </div>
+            </div>
+
+            <div style="clear: both;"></div>
+        </form>
+    </div>
+</div>

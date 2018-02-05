@@ -1,0 +1,71 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.Contact_Us}}</span>
+        <div>
+            <button md-button (click)="save()"><span style="color: #03a9f4;">{{arabicText.Send}}</span></button>
+        </div>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Location form-->
+            <div formGroupName="contactUsData">
+                <div class="input col-md-6">
+                    <md-select placeholder="{{arabicText.Select_Category}}" formControlName="category">
+                        <md-option *ngFor="let type of categoryType" [value]="type.id">
+                            {{ type.Display }}
+                        </md-option>
+                    </md-select>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].contactUsData['controls'].category.errors && form['controls'].contactUsData['controls'].category.errors.required">
+                                {{arabicText.Category_Required}} 
+                            </span>
+                    </div>
+                </div>
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.Full_Name}}" formControlName="fullName">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].contactUsData['controls'].fullName.errors && form['controls'].contactUsData['controls'].fullName.errors.required">
+                            {{arabicText.Full_Name_Required}}
+                        </span>
+                    </div>
+                </div>
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.EMAIL}}" [readonly]="'true'" formControlName="email">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].contactUsData['controls'].email.errors && form['controls'].contactUsData['controls'].email.errors.required">
+                            {{arabicText.Email_Required}}
+                        </span>
+                        <span *ngIf="form['controls'].contactUsData['controls'].email.status == 'INVALID' && !form['controls'].contactUsData['controls'].email.errors.required">{{arabicText.Email_Not_Valid}}</span>
+                    </div>
+                </div>
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.MOBILE}}" formControlName="mobile">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].contactUsData['controls'].mobile.errors && form['controls'].contactUsData['controls'].mobile.errors.required">
+                            {{arabicText.errors.MOBILE_REQUIRED}}
+                        </span>
+                        <span *ngIf="form['controls'].contactUsData['controls'].mobile.status == 'INVALID' && !form['controls'].contactUsData['controls'].mobile.errors.required">{{arabicText.Mobile_Invalid}}</span>
+
+                    </div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container class="example-full-width">
+                        <textarea mdInput placeholder="{{arabicText.Message}}" maxlength="200" rows="5" formControlName="message"></textarea>
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].contactUsData['controls'].message.errors && form['controls'].contactUsData['controls'].message.errors.required">
+                            {{arabicText.Message_Required}}
+                        </span>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </form>
+    </div>
+</div>

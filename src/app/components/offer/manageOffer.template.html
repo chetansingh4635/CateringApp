@@ -1,0 +1,87 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666">{{title}}</span>
+        <div>
+            <button md-button (click)="save()"><span style="color: #03a9f4;">{{arabicText.SAVE}}</span></button>
+            <button md-button (click)="_navigator.navigateByUrl('/offers')"><span style="color: #666666;">{{arabicText.CANCEL}}</span></button>
+        </div>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Offer form-->
+            <div formGroupName="offerData">
+                <div class="input col-md-6">
+                    <md-select style="margin-top: 10px;" [disabled]="offerId" placeholder="{{arabicText.Select_category}}" formControlName="category">
+                        <md-option *ngFor="let category of categoryList" [value]="category">
+                          {{category == 'Food' ? arabicText.FOOD : category == 'Shop' ? arabicText.SHOP : category == 'Accomodation' ? arabicText.ACCOMODATION : '' }}
+                        </md-option>
+                    </md-select>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].offerData['controls'].category.errors && form['controls'].offerData['controls'].category.errors.required">
+                                {{arabicText.Category_required}} 
+                            </span>
+                    </div>
+                </div>
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.Valid_From}}" type="date" formControlName="validFrom">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].offerData['controls'].validFrom.errors && form['controls'].offerData['controls'].validFrom.errors.required">
+                       {{arabicText.Valid_From_is_required}}</span>
+                       <span *ngIf="form['controls'].offerData && form['controls'].offerData.hasError('dateInvalidFrom') && !(form['controls'].offerData['controls'].validFrom.errors && form['controls'].offerData['controls'].validFrom.errors.required)">
+                             {{arabicText.Valid_From_is_not_valid}}
+                        </span>
+                    </div>
+                </div>
+                <div class="input col-md-6">
+                    <md-select style="margin-top: 10px;" placeholder="{{arabicText.Select_offer_type}}" formControlName="offerType">
+                        <md-option *ngFor="let type of offersType" [value]="type.type">
+                            {{ type.type }}
+                        </md-option>
+                    </md-select>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].offerData['controls'].offerType.errors && form['controls'].offerData['controls'].offerType.errors.required">
+                                {{arabicText.Offer_Type_is_required}}  
+                            </span>
+                    </div>
+                </div>
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.Valid_Till}}" type="date" formControlName="validTill">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].offerData['controls'].validTill.errors && form['controls'].offerData['controls'].validTill.errors.required">
+                      {{arabicText.Valid_Till_is_required}}</span>
+                        <span *ngIf="form['controls'].offerData && form['controls'].offerData.hasError('dateInvalid') && !(form['controls'].offerData['controls'].validTill.errors && form['controls'].offerData['controls'].validTill.errors.required)">
+                         {{arabicText.Valid_Till_is_not_valid}} 
+                        </span>
+
+                    </div>
+                </div>
+                 <div class="input col-md-12">
+                    <md-input-container class="example-full-width">
+                        <input mdInput placeholder="{{arabicText.DESCRIPTION}}" formControlName="description" maxlength="70">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].offerData['controls'].description.errors && form['controls'].offerData['controls'].description.errors.required">
+                      {{arabicText.errors.Description_is_required}} </span>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <div class="input col-md-6" *ngIf="form['controls'].offerData['controls'].offerType.value != 'OFFER'">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.Offer_Value}}" type="number" formControlName="offerValue">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].offerData && form['controls'].offerData.hasError('offerInvalid')">
+                             {{arabicText.Offer_Value_is_not_valid}}</span>
+                    </div>
+                </div>
+                
+                <div style="clear: both;"></div>
+            </div>
+
+        </form>
+    </div>
+</div>

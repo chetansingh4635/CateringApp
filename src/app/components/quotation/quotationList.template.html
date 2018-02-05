@@ -1,0 +1,63 @@
+<div class="location-list">
+    <div class=toolbar>
+        <div class="input col-md-2">
+            <md-input-container>
+                <input mdInput placeholder="{{arabicText.SEARCH}}" type="text" [(ngModel)]="search" (keyup)="getQuotation({page:1})">
+            </md-input-container>
+        </div>
+        <div class="col-sm-2">
+            <md-select placeholder="{{arabicText.Select_Category}}" [(ngModel)]="category" (change)="getQuotation({page:1})">
+                <md-option [value]="">{{arabicText.ALL}}</md-option>
+                <md-option *ngFor="let category of categoryList" [value]="category">
+                   {{category == 'Food' ? arabicText.FOOD : category == 'Shop' ? arabicText.SHOP : category == 'Accomodation' ? arabicText.ACCOMODATION : '' }}
+                </md-option>
+            </md-select>
+        </div>
+        <div class="input col-md-2">
+            <md-input-container>
+                <input mdInput placeholder="{{arabicText.Valid_From}}" format="dd/MM/yyyy" type="date" [(ngModel)]="validFrom" (change)="getQuotation({page:1})">
+            </md-input-container>
+        </div>
+        <div class="input col-md-2">
+            <md-input-container>
+                <input mdInput placeholder="{{arabicText.Valid_Till}}" format="dd/MM/yyyy" type="date" [(ngModel)]="validTill" (change)="getQuotation({page:1})">
+            </md-input-container>
+        </div>
+        <div class="col-sm-2">
+            <md-select placeholder="Read / Unread" [(ngModel)]="isRead" (change)="getQuotation({page:1})">
+                <md-option [value]="">{{arabicText.ALL}}</md-option>
+                <md-option [value]="true">{{arabicText.Read}}</md-option>
+                <md-option [value]="false">{{arabicText.UnRead}}</md-option>
+            </md-select>
+        </div>
+    </div>
+    <div style="background-color: white;padding: 20px">
+        <div class="col-sm-4" *ngIf="quatations && quatations.length==0 && totalCount == 0">
+            <span> {{arabicText.No_Records_Found}}</span>
+        </div>
+        <div class="col-md-12 card" *ngIf="quatations && quatations.length>0">
+            <table>
+                <tr>
+                    <th>{{arabicText.Customer_Details}}</th>
+                    <th style="width: 12%">{{arabicText.Date_Of_arrival}}</th>
+                    <th>{{arabicText.Category}}</th>
+                    <th style="width: 46%">Description</th>
+                    <th>{{arabicText.Read_Unread}}</th>
+                </tr>
+                <tr *ngFor="let quatation of quatations;let i = index">
+                    <td>{{quatation.name}}<br><a  href="mailto:{{quatation.email}}">{{quatation.email}}<br>{{quatation.mobile}}</a></td>
+                    <td>{{quatation.createdAt | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{quatation.category}} </td>
+                    <td>{{quatation.description}}</td>
+                    <td>
+                        <md-slide-toggle [color]="'primary'" style="display: inline-flex;margin-top: 0;" [checked]="quatation.isRead" (change)="updateReadUnread($event, quatation);quatation.isRead = !quatation.isRead">{{quatation.isRead ? 'Read' : 'Unread'}}</md-slide-toggle>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center" style="padding-top:20px">
+                <pagination [directionLinks]="true" [boundaryLinks]="true" [totalItems]="totalCount" [(ngModel)]="currentPage" (pageChanged)="getQuotation($event)"></pagination>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666; width: 85%">{{title}}</span>
+        <button class="btn btn-primary pull-right" (click)="uploadImage()">{{arabicText.SAVE}} </button>
+        <button class="btn btn-default pull-right" (click)="cancel()"><span style="color: #666666;" >{{arabicText.CANCEL}}</span></button>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Business form-->
+            <div formGroupName="addChef">
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.NAME}}" maxlength="40" formControlName="name" style="text-transform:capitalize">
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].addChef['controls'].name.errors && form['controls'].addChef['controls'].name.errors?.required">
+                        {{arabicText.errors.NAME_REQUIRED}}
+                    </span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                <div>
+                    <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 600;">{{arabicText.Chef_Image}}</span>
+                        <div>
+                            <button md-button (click)="clearImage()" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                        </div>
+                    </div>
+                    <div id="chefImage" style="background-image: url(../../../assets/images/img_placeholder.svg);       background-size: auto 100%;height: 200px; background-repeat: no-repeat;"></div>
+                    <input type="file" style="position: absolute; top: 51px; width: 100%; height: 200px; opacity: 0; cursor: pointer;" (change)="extractImage($event)"/>
+                </div>
+                
+            </div>
+            <div style="clear: both;"></div>
+            </div>
+        </form>
+    </div>
+</div>
+<md-spinner *ngIf="showLoader" class="loader"></md-spinner>

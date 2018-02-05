@@ -1,0 +1,56 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666;    width: 80%;">{{title}}</span>
+        <button type="button" routerLink='/business/shop/{{businessShopId}}/items/add' style="float: right;"
+            class="btn btn-primary">{{arabicText.Add_Shop_Item}}</button>
+        <button md-button style="float: right;    margin-right: 20px;" routerLink='/business/shop/update/{{businessShopId}}'><span style="color: #03a9f4;">{{arabicText.EDIT}}</span></button>
+    </div>
+    <div class="container-fluid" style="padding-top:30px">
+        <div class="col-md-8">
+            <!--<div>
+                {{arabicText.TITLE}}: {{businessShopDetails.shop.title}}
+            </div>-->
+            <div class="col-md-2">
+                {{arabicText.DESCRIPTION}}:
+            </div>
+            <pre class="col-md-8" style="padding-top: 0px;">{{businessShopDetails.shop.description}}</pre>
+        </div>
+        <div class="col-md-3">
+            <label>{{arabicText.COVER_IMAGE_SQUARE}}</label>
+            <img [src]="getImagePath(businessShopDetails.shop.coverImageSquare)" alt="..." class="img-thumbnail">
+        </div>
+        <div class="col-md-12" style="padding-top: 20px" *ngIf="businessShopDetails.shop && businessShopDetails.shop.days && businessShopDetails.shop.days.length">
+            <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.DAY_WISE_TIMING}}</span>
+            <table class="table table-bordered">
+                <tr>
+                    <th>{{arabicText.DAY}}</th>
+                    <th>{{arabicText.Start_Time}}</th>
+                    <th>{{arabicText.End_Time}}</th>
+                </tr>
+                <tr *ngFor="let day of businessShopDetails.shop.days;let i = index">
+                    <td class="text-capitalize">{{day}}</td>
+                    <td>{{businessShopDetails.shop.dayWiseTiming[day].startTime}}</td>
+                    <td>{{businessShopDetails.shop.dayWiseTiming[day].endTime}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12" style="margin-top: 10px;background-color: white;height: 30px;" *ngIf="businessShopDetails.shopItems.length >0">
+        <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.Manage_Shop_Items}}</span>
+    </div>
+    <div class="list-item" style="width: 25%;margin-top:20px " *ngFor="let shop of businessShopDetails.shopItems;let i = index;">
+        <md-card>
+            <md-card-title><a>{{shop.title}}</a></md-card-title>
+            <img md-card-lg-image [src]="getImagePath(shop.coverImage)" class="card-image" />
+            <md-card-content style="margin-top:8px;height: 150px">
+                <md-card-subtitle>{{arabicText.PRICE}} : {{shop.price}}</md-card-subtitle>
+                <md-card-subtitle><div style="min-height: 130px;max-height: 130px;overflow-y: auto;">{{arabicText.DESCRIPTION}} {{shop.description}}</div></md-card-subtitle>
+            </md-card-content>
+            <div style="padding-top: 15px;">
+                <md-slide-toggle [disabled]="!shop.isActive" [color]="'primary'" style="display: inline-flex;" [checked]="shop.isAvailable"
+                    (change)="setAvailable($event, shop)">{{arabicText.AVAILABLE}}</md-slide-toggle>
+                <a class="btn btn-sm" routerLink='/business/shop/{{businessShopId}}/items/edit/{{shop._id}}' style="float:right;margin-top: -7px;;font-weight: bold;font-size: 15px;">{{arabicText.EDIT}}</a>
+            </div>
+        </md-card>
+    </div>
+</div>

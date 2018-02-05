@@ -1,0 +1,100 @@
+<div class="col-lg-12" style="padding:15px;">
+    <div class="col-lg-3 cursor-pointer removepadding-right">
+        <div class="col-lg-12 row card-container container-text totalVisit-container img-padding">
+            {{arabicText.Visits}}
+            <br>
+            <label class="label-margin">
+                {{homeList.visitCount}}
+            </label>
+        </div>
+    </div>
+    <div class="col-lg-3 cursor-pointer removepadding-right">
+        <div class="col-lg-12 row card-container container-text totalLocation-container img-padding">
+           {{arabicText.User_Business_Favourite}}
+            <br>
+            <label class="label-margin">
+                {{homeList.usersCountMarkedFavourite}}
+            </label>
+        </div>
+    </div>
+    <div class="col-lg-3 cursor-pointer removepadding-right" (click)="navigate(navListItems[0])">
+        <div class="col-lg-12 row  card-container container-text totalUser-container img-padding">
+            {{arabicText.Offers}}
+            <br>
+            <label class="label-margin">
+                {{homeList.offerCounts}}
+            </label>
+        </div>
+    </div>
+    <div class="col-lg-3 cursor-pointer removepadding-right" (click)="navigate(navListItems[1])">
+        <div class="col-lg-12 row card-container container-text totalFeedback-container img-padding">
+            {{arabicText.Feedbacks}}
+            <br>
+            <label class="label-margin">
+                {{homeList.feedbackCounts}}
+            </label>
+        </div>
+    </div>
+     <div class="col-lg-3 cursor-pointer removepadding-right" (click)="navigate(navListItems[2])" style="    margin-top: 15px;">
+        <div class="col-lg-12 row card-container container-text featuredImage-container img-padding">
+            {{arabicText.Total_Quotation_Request}}
+            <br>
+            <label class=" label-margin ">
+            {{homeList.quotationCounts}}
+            </label>
+        </div>
+    </div>
+    <div class="col-lg-12 table-cell">
+        <accordion [closeOthers]="oneAtATime">
+            <div *ngFor="let category of homeList.categories">
+                <div class="panel-heading card-header" style="background-color: #f5f5f5;    font-size: 16px; border-color: #ddd; border-radius: 4px;border-top-left-radius: 3px; border-top-right-radius: 3px;    margin-bottom: 3px;    padding: 10px 15px;">
+                {{category.category == 'Food' ? arabicText.FOOD : category.category == 'Shop' ? arabicText.SHOP : category.category == 'Accomodation' ? arabicText.ACCOMODATION : '' }}
+                <i style="position: absolute;right: 6%;">{{category.visitCount}}</i>
+                </div>
+                <div *ngIf="category.subCategory" >
+                    <h3>{{arabicText.Sub_Categories}}</h3>
+                    <accordion-group #group>
+                        <div accordion-heading>
+                            {{arabicText.Banquets}}
+                            <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+                        </div>
+                        <div *ngFor="let banquets of category.subCategory.Banquets" class="border-bottom-container">
+                            {{banquets.title}}
+                            <i style="position: absolute;right: 6%;">{{banquets.visitCount}}</i>
+                        </div>
+                    </accordion-group>
+                    <accordion-group #group>
+                        <div accordion-heading>
+                            {{arabicText.Bunglows}}
+                            <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+                        </div>
+                        <div *ngFor="let Bunglows of category.subCategory.Bunglows" class="border-bottom-container">
+                            {{Bunglows.title}}
+                            <i style="position: absolute;right: 6%;">{{Bunglows.visitCount}}</i>
+                        </div>
+                    </accordion-group>
+                    <accordion-group #group>
+                        <div accordion-heading>
+                            {{arabicText.Rooms}}
+                            <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+                        </div>
+                        <div *ngFor="let Rooms of category.subCategory.Rooms" class="border-bottom-container">
+                            {{Rooms.title}}
+                            <i style="position: absolute;right: 6%;">{{Rooms.visitCount}}</i>
+                        </div>
+                    </accordion-group>
+                    <accordion-group #group>
+                        <div accordion-heading>
+                            {{arabicText.Villas}}
+                            <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+                        </div>
+                        <div *ngFor="let Villas of category.subCategory.Villas" class="border-bottom-container">
+                            {{Villas.title}}
+                            <i style="position: absolute;right: 6%;">{{Villas.visitCount}}</i>
+                        </div>
+                    </accordion-group>
+                </div>
+            </div>
+        </accordion>
+    </div>
+</div>

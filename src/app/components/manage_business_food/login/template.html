@@ -1,0 +1,33 @@
+<div class="login-background">
+    <div class="theme-art">
+        <div class="logo centered">{{arabicText.Tawtini_Catering}}</div>
+        <img class="theme" src="../../assets/images/fisherman_cartoon.png" />
+    </div>
+    <div class="login-container flex-center children-center">
+      <div class="form-container place-holder-color" >
+            <form [formGroup]="form" (ngSubmit)="login()" novalidate>
+                <div class="form-input centered">
+                    <md-input-container>
+                        <input #email type="email" formControlName="email" mdInput placeholder="{{arabicText.EMAIL}}" style="color: #ffffff;" />
+                    </md-input-container>
+                    <div class="form-validation-message">
+                        <span *ngIf="!form.controls.email.valid && (form.controls.email.dirty || form.controls.email.pristine) && submittedOnce">{{arabicText.errors.EMAIL_NOT_VALID}}</span>
+                    </div>
+                </div>
+                <div class="form-input centered">
+                    <md-input-container>
+                        <input #password type="password" formControlName="password" mdInput placeholder="{{arabicText.PASSWORD}}" validate-event="blur" style="color: #ffffff;"
+                        />
+                    </md-input-container>
+                    <div class="form-validation-message">
+                        <span *ngIf="!form.controls.password.valid && (form.controls.password.dirty || form.controls.password.pristine) && submittedOnce">{{arabicText.errors.PASSWORD_REQUIRED}}</span>
+                    </div>
+                </div>
+                <a md-button routerLink="/forgotpassword">{{arabicText.FORGOT_PASSWORD}}</a>
+                <div class="form-submit centered">
+                    <button md-raised-button type="submit" [color]="'primary'"><span style="color: #ffffff;">{{arabicText.LOGIN}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,250 @@
+/* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Regular.ttf');
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow: hidden;
+    font-family: 'Roboto';
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.hide {
+    display: none;
+}
+
+.centered {
+    text-align: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-center.children-center {
+    align-items: center;
+}
+textarea {
+    resize: none;
+}
+p{
+        word-break: break-all;
+}
+.loader{
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index: 9999;
+    
+}
+.mat-tab-body-content {
+    height: 100%;
+    overflow: hidden !important;
+}
+/* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Regular.ttf');
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow: hidden;
+    font-family: 'Roboto';
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.hide {
+    display: none;
+}
+
+.centered {
+    text-align: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-center.children-center {
+    align-items: center;
+}
+.table th {
+   text-align: center;   
+}
+.table td{
+   text-align: center;   
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+img{
+    vertical-align: middle;
+}
+
+.cover-image{
+    width: 100%;
+}
+.icon-image{
+    height: 70px;
+    max-width: 100px;
+}
+
+.cover-image-box{
+     display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+label{
+    font-weight: bold;
+}
+
+.card-image{
+    height: 200px !important;
+    width:100%;
+}
+.mat-card{
+    padding: 10px !important;
+}
+.address-box{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.custom-header{
+   background-color: #ffffff !important;
+    padding: 8px;
+    margin-bottom: 15px !important;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+    
+}
+.custom-header .toolbar {
+        display: flex;
+        align-content: space-between;
+        margin-bottom: 20px;
+        min-height: 74px;
+    }
+.error {
+        text-align: left !important;
+        color: firebrick;
+}
+
+.box-details{
+    background: #fff;
+    margin-top: 10px;
+}
+
+.create-image{
+    border: 1px solid #637ab7;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: inherit;
+    margin-bottom: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.create-video{
+    border: 1px solid #637ab7;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: inherit;
+    margin-bottom: 15px;
+}
+.loader{
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index: 9999;
+    
+}
+.location-list .toolbar {
+        display: flex;
+        align-content: space-between;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        background-color: #ffffff !important;
+        box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+        margin-bottom: 20px;
+        min-height: 74px;
+    }
+   .location-list .form {
+        padding: 20px;
+        background-color: #ffffff;
+        
+    }
+.location-list .form .input:nth-child(odd) {
+            text-align: left;
+        }
+.location-list .form  .input:nth-child(even) {
+            text-align: right;
+        }
+.location-list .form  .validation {
+            text-align: left !important;
+            color: firebrick;
+                height: 20px;
+}
+p{
+        word-break: break-all;
+}
+pre{
+    background-color: white;
+    border: none;
+    white-space: pre-wrap;       
+    white-space: -moz-pre-wrap; 
+    white-space: -pre-wrap;      
+    white-space: -o-pre-wrap;   
+    word-wrap: break-word;       
+
+
+}
+md-card-subtitle{
+     word-break: break-all;
+}
+md-card-title{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.place-holder-color .mat-input-placeholder{
+    color: white
+}
+.card-header {
+    background-color: #69c6ba!important;
+}

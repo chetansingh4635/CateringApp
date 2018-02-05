@@ -1,0 +1,93 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666; width: 85%">{{title}}</span>
+        <button class="btn btn-primary pull-right" (click)="uploadImage()">{{arabicText.SAVE}} </button>
+        <button class="btn btn-default pull-right"><span style="color: #666666;" [routerLink]="['/business']">{{arabicText.CANCEL}}</span></button>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Business form-->
+            <div formGroupName="business">
+                <div class="col-md-12 row" style="margin-bottom:20px ">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 500; font-size: large; color: #666666">{{arabicText.BUSINESS_DETAILS}}</span>
+                    </div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.NAME}}" formControlName="name" style="text-transform:capitalize">
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].business['controls'].name.errors && form['controls'].business['controls'].name.errors?.required">
+                        {{arabicText.errors.NAME_REQUIRED}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <textarea  mdInput maxlength="500" rows="5" placeholder="{{arabicText.DESCRIPTION}}" formControlName="description"></textarea>
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].business['controls'].description.errors && form['controls'].business['controls'].description.errors?.required">
+                        {{arabicText.errors.Description_is_required}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.ADDRESS}}" formControlName="address">
+                    </md-input-container>
+                    <div style="height: 58px;width: 100%;margin-top: -58px;opacity: 1;z-index: 9;position: absolute;"></div>
+                   <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].business['controls'].address.errors && form['controls'].business['controls'].address.errors?.required">
+                        {{arabicText.errors.ADDRESS_REQUIRED}}
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <!--Google Maps Places Autocomplete-->
+            <div class="input col-md-12">
+                <md-input-container>
+                    <input mdInput placeholder="{{arabicText.Search_Address}}" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search [formControl]="searchField"
+                    />
+                </md-input-container>
+                <sebm-google-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                    <sebm-google-map-marker [latitude]="latitude" [longitude]="longitude"></sebm-google-map-marker>
+                </sebm-google-map>
+            </div>
+
+            <!--Cover Image-->
+            <div class="col-md-6">
+                <div>
+                    <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 600;">{{arabicText.COVER_IMAGE}}</span>
+                        <div>
+                            <button md-button (click)="clearImage(0)" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                        </div>
+                    </div>
+                    <div id="cover" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: auto 100%;background-repeat: no-repeat; height: 300px;"></div>
+                    <input type="file" style="position: absolute; top: 51px; width: 100%; height: 300px; opacity: 0; cursor: pointer;" (change)="extractImage($event,0)"
+                    />
+                </div>
+            </div>
+            <!--Cover Image Square-->
+            <!--<div class="col-md-6">
+                <div>
+                    <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 600;">{{arabicText.COVER_IMAGE_SQUARE}}</span>
+                        <div>
+                            <button md-button (click)="clearImage(1)" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                        </div>
+                    </div>
+                    <div id="coverImageSquare" style="background-image: url(../../../assets/images/img_placeholder.svg);background-size: auto 100%;background-repeat: no-repeat; height: 300px;"></div>
+                    <input type="file" style="position: absolute; top: 51px; width: 100%; height: 300px; opacity: 0; cursor: pointer;" (change)="extractImage($event,1)"
+                    />
+                </div>
+            </div>-->
+
+            <div style="clear: both;"></div>
+        </form>
+    </div>
+</div>
+<md-spinner *ngIf="showLoader" class="loader"></md-spinner>

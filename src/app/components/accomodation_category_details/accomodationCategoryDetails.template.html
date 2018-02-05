@@ -1,0 +1,146 @@
+<md-tab-group>
+    <md-tab label="{{title}}" style="overflow-y: hidden;">
+        <div class="container-fluid" >
+            <div class="col-md-12" style="padding-bottom: 20px;padding-top: 20px">
+                <button md-button style="float: right;" routerLink='/business/accomodations/{{categoryDetails.accomodation}}/{{categoryDetails.category}}/edit/{{categoryDetails._id}}'><span style="color: #03a9f4;">{{arabicText.EDIT}}</span></button>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    {{arabicText.TITLE}}: {{categoryDetails.title}}
+                </div>
+                <div style="margin-top: 20px">
+                    {{arabicText.Accomodation_Type}}: {{categoryDetails.accomodationType}}
+                </div>
+                <div style="margin-top: 20px">
+                    {{arabicText.CARPET_AREA}}: {{categoryDetails.carpetArea}}
+                </div>
+                <div style="margin-top: 20px">
+                    {{arabicText.RENTAL_PRICE}}: {{categoryDetails.rentalPrice}}
+                </div>
+                <div style="margin-top: 20px">
+                    {{arabicText.DESCRIPTION}}:
+                    <pre>{{categoryDetails.description}}</pre>
+                </div>
+                <div style="margin-top: 20px;margin-bottom: 20px">
+                    <md-slide-toggle [color]="'primary'" style="display: inline-flex;" [checked]="categoryDetails.isAvailable" (change)="setAvailable($event, categoryDetails)">{{arabicText.AVAILABLE}}</md-slide-toggle>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>{{arabicText.COVER_IMAGE}}</label><br>
+                <img [src]="getImagePath(categoryDetails.coverImage)" alt="..." class="img-thumbnail">
+            </div>
+            <div class="col-md-3" *ngIf="categoryId != 'Banquets'">
+                <label>{{arabicText.COVER_IMAGE_SQUARE}}</label><br>
+                <img [src]="getImagePath(categoryDetails.coverImageSquare)" alt="..." class="img-thumbnail">
+            </div>
+            <div class="col-md-12" style="padding-bottom: 20px" *ngIf="categoryDetails.panaromicImage.length >0">
+                <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.Panoramic_images}}</span>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-3" *ngFor="let panoramic of categoryDetails.panaromicImage">
+                    <img [src]="getImagePath(panoramic)" alt="..." class="img-thumbnail">
+                </div>
+            </div>
+            <div class="col-md-12" style="padding-bottom: 20px;padding-top: 20px">
+                <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.IMAGES}}</span>
+            </div>
+            <div class="col-md-12">
+                <h4 *ngIf="categoryDetails.images.length > 5" style="color:red; margin-bottom: 40px">{{arabicText.Maximim_Limit_Reached_Upload_Image}}</h4>
+            </div>
+            <div class="col-md-12" style="border: solid 1px #eee;margin-bottom: 20px;" *ngIf="categoryDetails.images.length < 6">
+                <div class="col-sm-3" style="margin-bottom: 15px;">
+                    <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 600;">{{arabicText.Click_Upload_Image}}</span>
+                        <div>
+                            <button md-raised-button (click)="uploadImageGallery()">{{arabicText.UPLOAD}}</button>
+                        </div>
+                    </div>
+                    <div id="addImage" [ngStyle]="images.dom" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: cover; height: 150px;"></div>
+                    <input type="file" accept="image/x-png,image/gif,image/jpeg" style="position: absolute; top: 51px; width: 100%; height: 150px; opacity: 0; cursor: pointer;"
+                        (change)="extractImageGallery($event)" />
+                </div>
+            </div>
+            <div class="col-md-3" style="margin-top: 20px;margin-bottom: 20px; " *ngFor="let images of categoryDetails.images;let i = index;">
+                <div style="border: solid 1px #eee;padding:2px">
+                    <div style="margin-bottom: 20px;">
+                        <md-slide-toggle [color]="'primary'" [disabled]="!categoryDetails.isAvailable" style="display: inline-flex;" [checked]="images.showOnDetails"
+                            (change)="setShowOnDetailsImages($event, images)">{{arabicText.Show_On_Details}}</md-slide-toggle>
+                        <i (click)="openDialogVideos(i, images._id,'Image')" class="glyphicon glyphicon-trash" style="float:right"></i>
+                    </div>
+                    <img [src]="getImagePath(images.file)" style="height: 150px;" alt="..." class="img-thumbnail">
+                </div>
+            </div>
+            <div class="col-md-12" style="padding-bottom: 20px;padding-top: 20px">
+                <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.VIDEOS}}</span>
+            </div>
+            <div class="col-md-12">
+                <h4 *ngIf="categoryDetails.videos.length > 5" style="color:red;">{{arabicText.Maximim_Limit_Reached_Upload_Video}}</h4>
+                <div>
+                    <div class="col-md-12" style=" margin-top: 25px;" *ngIf="categoryDetails.videos.length < 6">
+                        <div>
+                            <div class="col-md-6">
+                                <md-input-container>
+                                    <input mdInput placeholder="{{arabicText.Enter_YouTube_Link}}" [(ngModel)]="youtubeLinks" (keyup)="validateYouTubeUrl(youtubeLinks)">
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-6">
+                                <button [disabled]="!youtubeVideoId" style="margin-bottom: 20px;" md-raised-button (click)="UploadYoutubeLink(youtubeVideoId,youTubeTitle)">{{arabicText.UPLOAD}}</button>
+                            </div>
+                            <div class="col-md-4">
+                                <youtube-player [height]="150" [width]="190" [videoId]="youtubeVideoId" *ngIf="youtubeVideoId"></youtube-player>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="margin-top: 20px;margin-bottom: 20px;" *ngFor="let video of  categoryDetails.videos">
+                        <div style="border: solid 1px #eee;padding:2px">
+                            <div style="margin-bottom: 10px">
+                                <md-slide-toggle [color]="'primary'" [disabled]="!categoryDetails.isAvailable" style="display: inline-flex;" [checked]="video.showOnDetails"
+                                    (change)="setShowOnDetailsVideos($event, video)">{{arabicText.Show_On_Details}}</md-slide-toggle>
+                                <i (click)="openDialogVideos(i, video._id,'Video')" class="glyphicon glyphicon-trash" style="float:right"></i>
+                            </div>
+                            <div>
+                                <youtube-player [height]="150" [width]="210" [videoId]="video.youtubeUrl"></youtube-player>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-tab>
+    <md-tab label="{{arabicText.Banquets_Menu}}" style="overflow-y: hidden;" *ngIf="categoryId == 'Banquets'">
+        <div class="container-fluid" >
+            <div class="col-md-12" style="padding-bottom: 20px;padding-top: 20px">
+                <div class="col-sm-4">
+                    <md-select placeholder="{{arabicText.MENU_CATEGORY}}" (change)="getBanquetMenu($event)">
+                        <md-option [value]=null>{{arabicText.ALL}}</md-option>
+                        <md-option *ngFor="let category of menuCategory" [value]="category">
+                            {{category }}
+                        </md-option>
+                    </md-select>
+                </div>
+                <div class="col-md-8">
+                    <button  md-button class="btn btn-primary" style="float: right;" routerLink='/business/accomodations/Banquets/menu/add/{{categoryDetails._id}}'><span style="color: #03a9f4;">{{arabicText.Add_Menu}}</span></button>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="banquetMenu && banquetMenu.length" style="padding-top: 20px">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>{{arabicText.MENU_CATEGORY}}</th>
+                        <th>{{arabicText.NAME}}</th>
+                        <th>{{arabicText.PRICE}}{{arabicText.SAR}}</th>
+                        <th style="width: 10%"></th>
+                        <th style="width: 4%"></th>
+                    </tr>
+                    <tr *ngFor="let menu of banquetMenu;let i = index">
+                        <td>{{menu.menuCategory}}</td>
+                        <td>{{menu.name}}</td>
+                        <td>{{menu.price}}</td>
+                        <td> <button md-button style="float: right;" routerLink='/business/accomodations/Banquets/menu/edit/{{categoryDetails._id}}/{{menu._id}}'><span style="color: #03a9f4;">{{arabicText.EDIT}}</span></button></td>
+                        <td> <i (click)="openDialogMenu(i, menu._id)" class="glyphicon glyphicon-trash" style="top:10px"></i></td>
+                    </tr>
+                </table>
+                <span *ngIf="banquetMenu.length == 0">{{arabicText.No_Records}}</span>
+            </div>
+        </div>
+    </md-tab>
+</md-tab-group>

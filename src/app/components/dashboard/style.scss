@@ -1,0 +1,77 @@
+@font-face {
+  font-family: 'Tawtini';
+    src: url('../../../assets/fonts/AsiyahScript.ttf');
+}
+
+$tawtiniColor : #273e78;
+
+.dashboard-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.dashboard-list {
+    width: 200px;
+    position: absolute;
+    left: 0;
+}
+
+.dashboard-content {
+    width: calc(100% - 200px);
+    background-color: #eeeeee;
+    position: absolute;
+    right: 0px;
+    padding: 20px;
+    overflow-y: auto; 
+}
+
+.dashboard-list, .dashboard-content {
+    height: calc(100vh - 64px);
+}
+
+.list-division {
+    background-color: #cccccc;
+    color: #444444;
+    padding: 2px 16px;
+}
+
+/* Material Design overrides */
+md-toolbar {
+    background-color: $tawtiniColor;
+    span.title {
+        font-family: 'Tawtini';
+        font-size: xx-large;
+        color: #ffffff;
+        margin-left: 32px; 
+    }
+    img.nav {
+        width: 32px;
+    }
+}
+
+md-list {
+    padding: 0px !important;
+}
+
+md-list-item {
+    cursor: pointer;
+    color: #444444 !important;
+}
+
+md-list-item:hover {
+    background-color: #eeeeee;
+}
+
+md-list-item.active {
+    background-color: #eeeeee;
+    .mat-list-item-content {
+        color: $tawtiniColor !important;
+        font-weight: 600;
+    }
+}
+.mat-menu-panel{
+    margin-top: 45px !important;
+}
+md-list-item.mat-list-item-content{
+    padding: 0px !important;
+}

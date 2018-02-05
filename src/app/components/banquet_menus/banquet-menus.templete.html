@@ -1,0 +1,50 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666; width: 85%">{{title}}</span>
+        <button class="btn btn-primary pull-right" (click)="save()">{{arabicText.SAVE}} </button>
+        <button class="btn btn-default pull-right" (click)="cancel()"><span style="color: #666666;" >{{arabicText.CANCEL}}</span></button>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Business form-->
+            <div formGroupName="banquetMenu">
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.NAME}}" maxlength="40" formControlName="name" style="text-transform:capitalize">
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].banquetMenu['controls'].name.errors && form['controls'].banquetMenu['controls'].name.errors?.required">
+                        {{arabicText.errors.NAME_REQUIRED}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <input mdInput type="number" placeholder="{{arabicText.Quantity_Price}}{{arabicText.SAR}}" formControlName="price">
+                    </md-input-container>
+                    <div class="input col-md-6 validation"  style="height:40px"  [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].banquetMenu['controls'].price.errors && form['controls'].banquetMenu['controls'].price.errors?.required">
+                         {{arabicText.Quantity_Price_Required}}
+                    </span>
+                        <span *ngIf="form['controls'].banquetMenu['controls'].price.errors && form['controls'].banquetMenu['controls'].price.errors?.pattern && !form['controls'].banquetMenu['controls'].price.errors?.required">
+                        {{arabicText.Quantity_Price_between}}
+                    </span>
+                    </div>
+                </div>
+                 <div class="input col-md-6">
+                    <md-select placeholder="{{arabicText.MENU_CATEGORY}}" formControlName="menuCategory">
+                        <md-option *ngFor="let category of menuCategory" [value]="category">
+                            {{ category == 'Breakfast' ? arabicText.Breakfast : category == 'Lunch' ? arabicText.Lunch : category == 'Dinner' ? arabicText.Dinner : category == 'Starters' ? arabicText.Starters : '' }}
+                        </md-option>
+                    </md-select>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].banquetMenu['controls'].menuCategory.errors && form['controls'].banquetMenu['controls'].menuCategory.errors?.required">
+                        {{arabicText.errors.Menu_Category_Required}}
+                    </span>
+                    </div>
+                </div>
+            <div style="clear: both;"></div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666; width: 85%">{{title}}</span>
+        <button class="btn btn-primary pull-right" style=" margin-right: 10px;" routerLink='/business/accomodations/{{accomodationId}}/{{categoryId}}/add'>{{arabicText.ADD}} {{categoryId == 'Rooms' ? arabicText.Room : categoryId == 'Villas' ? arabicText.Villa : categoryId == 'Bunglows' ? arabicText.Bunglow : categoryId == 'Banquets' ? arabicText.Banquet : ''}} </button>
+        <!--<button class="btn btn-primary pull-right" routerLink='/business/food/chef/update/{{chefId}}'>Edit </button>-->
+    </div>
+    <div class="list-item" style="width: 33%;margin-top:20px " *ngFor="let categoryDetail of categoryDetails">
+    <md-card>
+        <md-card-title style="cursor: pointer" routerLink='/business/accomodations/{{categoryId}}/{{categoryDetail._id}}'><a  >{{categoryDetail.title}}</a></md-card-title>
+         <img md-card-lg-image routerLink='/business/accomodations/{{categoryId}}/{{categoryDetail._id}}' style="cursor: pointer" [src]="getImagePath(categoryDetail.coverImage)"
+            class="card-image" />
+        <md-card-content style="margin-top:8px;height: 200px">
+            <md-card-subtitle>{{arabicText.PRICE}} : {{categoryDetail.rentalPrice}}</md-card-subtitle>
+            <md-card-subtitle> {{arabicText.CARPET_AREA}} : {{categoryDetail.carpetArea}}</md-card-subtitle>
+            <md-card-subtitle>{{arabicText.Accomodation_Type}} : {{categoryDetail.accomodationType}}</md-card-subtitle>
+            <md-card-subtitle><div style="max-height: 100px;overflow-y: auto;">{{arabicText.DESCRIPTION}} {{categoryDetail.description}}</div></md-card-subtitle>            
+        </md-card-content>
+        <div>
+        <md-slide-toggle  [color]="'primary'"
+            style="display: inline-flex;" [checked]="categoryDetail.isAvailable" (change)="setAvailable($event, categoryDetail)">{{arabicText.AVAILABLE}}</md-slide-toggle>
+        <!--<md-slide-toggle [color]="'primary'" style="display: inline-flex;" [checked]="categoryDetail.showOnDetails" (change)="setShowOnDetail($event, categoryDetail)">Show Detail</md-slide-toggle>
+        <md-slide-toggle [color]="'primary'" style="display: inline-flex;" [checked]="categoryDetail.isSpecial" (change)="setSpecial($event, categoryDetail)">{{arabicText.Special}}</md-slide-toggle>-->
+        <a class="btn btn-sm" style="float:right;margin-top: -7px;;font-weight: bold;font-size: 15px;" routerLink='/business/accomodations/{{accomodationId}}/{{categoryId}}/edit/{{categoryDetail._id}}'>{{arabicText.EDIT}}</a>
+        </div>
+    </md-card>
+</div>
+</div>

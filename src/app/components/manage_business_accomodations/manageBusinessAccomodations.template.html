@@ -1,0 +1,86 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666">{{title}}</span>
+        <div>
+            <button md-button (click)="uploadAllTheData()"><span style="color: #03a9f4;">{{arabicText.SAVE}}</span></button>
+            <button md-button (click)="cancel()"><span style="color: #666666;">{{arabicText.CANCEL}}</span></button>
+        </div>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Location form-->
+            <div formGroupName="busninessAccomodations">
+                <div  class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.TITLE}}" maxlength="40" type="text" formControlName="title">
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].busninessAccomodations['controls'].title.errors && form['controls'].busninessAccomodations['controls'].title.errors?.required">
+                        {{arabicText.errors.Title_is_required}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <textarea mdInput rows="3" placeholder="{{arabicText.DESCRIPTION}}" maxlength="500" type="text" formControlName="description"></textarea>
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].busninessAccomodations['controls'].description.errors && form['controls'].busninessAccomodations['controls'].description.errors?.required">
+                        {{arabicText.errors.Description_is_required}}
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="col-md-6">
+            <div>
+                <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-weight: 600;">{{arabicText.COVER_IMAGE}}</span>
+                    <div>
+                        <button md-button (click)="clearImage(0,'cover')" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                    </div>
+                </div>
+                <div id="cover" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: auto 100%;background-repeat: no-repeat; height: 300px;"></div>
+                <input type="file" accept="image/x-png,image/jpeg" style="position: absolute; top: 51px; width: 100%; height: 300px; opacity: 0; cursor: pointer;"
+                    (change)="extractImage($event,0,'cover')" />
+            </div>
+
+        </div>
+        <!--Cover Image Square-->
+        <div class="col-md-6">
+            <div>
+                <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-weight: 600;">{{arabicText.COVER_IMAGE_SQUARE}}</span>
+                    <div>
+                        <button md-button (click)="clearImage(1,'cover')" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                    </div>
+                </div>
+                <div id="coverSquare" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: auto 100%;background-repeat: no-repeat; height: 300px;"></div>
+                <input type="file" accept="image/x-png,image/jpeg" style="position: absolute; top: 51px; width: 100%; height: 300px; opacity: 0; cursor: pointer;"
+                    (change)="extractImage($event,1,'cover')" />
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-4" *ngFor="let paranomic of paranomicImage;let i= index;">
+                <div>
+                    <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 600;">{{arabicText.Paranomic_Image}} </span>
+                        <div>
+                            <button md-button (click)="clearImage(i,'Paranomic')" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                            <button md-button (click)="removeParanomicImage(i)" style="background-color: transparent; color: #888888">{{arabicText.Remove}}</button>
+                        </div>
+                    </div>
+                    <div attr.id="Paranomic{{i}}" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: auto 100%;background-repeat: no-repeat; height: 200px;"></div>
+                    <input type="file" accept="image/x-png,image/jpeg" style="position: absolute; top: 51px; width: 100%; height: 200px; opacity: 0; cursor: pointer;"
+                        (change)="extractImage($event,i,'Paranomic')" />
+                </div>
+            </div>
+            <div *ngIf="paranomicImage.length < 3" class="" style="    padding-top: 8px;    float: right;    height: 250px;">
+                <button (click)="addParanomicImage()" md-raised-button>{{arabicText.Add_More_Paranomic_Image}}</button>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>
+<md-spinner *ngIf="showLoader" class="loader"></md-spinner>

@@ -1,0 +1,60 @@
+<div class="location-list">
+    <div class=toolbar>
+        <div class="col-=sm-2">
+            <button md-button routerLink='/offers/add'><span style="color: #03a9f4;">{{arabicText.ADD}}</span></button>
+        </div>
+        <div class="col-sm-4">
+            <md-select placeholder="{{arabicText.Select_Category}}" (change)="filterOffers($event, this)">
+                <md-option [value]=null>{{arabicText.ALL}}</md-option>
+                <md-option *ngFor="let category of categoryList" [value]="category">
+                    {{category == 'Food' ? arabicText.FOOD : category == 'Shop' ? arabicText.SHOP : category == 'Accomodation' ? arabicText.ACCOMODATION : '' }}
+                </md-option>
+            </md-select>
+        </div>
+    </div>
+    <div style="background-color: white;padding: 20px">
+        <div class="col-sm-4" *ngIf="offers.length==0 && totalCount == 0">
+            <span> {{arabicText.No_Records_Found}}</span>
+        </div>
+        <div class="col-md-12 card" *ngIf="offers && offers.length>0">
+            <table>
+                <tr>
+                    <th style="width: 120px;">{{arabicText.Category}}</th>
+                    <th style="width: 95px;">{{arabicText.Valid_From}}</th>
+                    <th style="width: 95px;"> {{arabicText.Valid_Till}}</th>
+                    <th style="width: 95px;">{{arabicText.Offer_Type}}</th>
+                    <th style="width: 95px;">{{arabicText.offer_Value}}</th>
+                    <th>{{arabicText.DESCRIPTION}}</th>
+                    <th style="width: 80px;">{{arabicText.STATUS}}</th>
+                    <!--<th style="width: 95px;">Show On Detail</th>-->
+                    <th></th>
+                </tr>
+                <tr *ngFor="let offer of offers | paginate: { itemsPerPage: pagingOptions.itemPerPage, currentPage: page }; let i = index ">
+                    <td><span class="boldFondWeight">{{offer.category}}</span></td>
+                    <td style="    text-align: center;">{{offer.validFrom | date: 'dd/MM/yyyy'}}</td>
+                    <td style="    text-align: center;">{{offer.validTill | date: 'dd/MM/yyyy'}}</td>
+                    <td style="    text-align: center;">{{offer.offerType}}</td>
+                    <td style="    text-align: center;">{{offer.offerValue}}</td>
+                    <td><span class="boldFondWeight">{{offer.description}}</span></td>
+                    <td>
+                        <span *ngIf="validExpire(offer.validTill)">      
+                            {{arabicText.Expired}}
+                        </span>
+                        <md-slide-toggle *ngIf="!validExpire(offer.validTill)" [disabled]="offer.isInActiveByAdmin" [color]="'primary'" [checked]="offer.isActive"
+                            (change)="setActiveInactive($event,offer,i)"></md-slide-toggle>
+                    </td>
+                    <!--<td>
+                        <md-slide-toggle [disabled]="offer.isInActiveByAdmin || validExpire(offer.validTill) || !offer.isActive"
+                            [color]="'primary'" [checked]="offer.showOnDetails" (change)="setShowOnDetail($event,offer)"></md-slide-toggle>
+                    </td>-->
+                    <td><button md-button routerLink='/offers/{{offer._id}}/edit/'><span style="color: #03a9f4;">{{arabicText.EDIT}}</span></button></td>
+                </tr>
+            </table>
+
+            <div class="text-center" style="padding-top:20px">
+                <pagination [directionLinks]="true" [boundaryLinks]="true" [totalItems]="totalCount" [(ngModel)]="currentPage" (pageChanged)="filterOffers({},$event)"></pagination>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.Account_Detail}}</span>
+        <div>
+            <button *ngIf="!isEdit" md-button (click)="isEdit = true"><span style="color: #03a9f4;">{{arabicText.EDIT}}</span></button>
+            <button md-button *ngIf="isEdit" (click)="isEdit = false;getDetail()"><span style="color: #03a9f4;">{{arabicText.CANCEL}}</span></button>
+            <button md-button *ngIf="isEdit" (click)="save()"><span style="color: #03a9f4;">{{arabicText.SAVE}}</span></button>
+            <button md-button *ngIf="!isEdit" (click)="_router.navigateByUrl('/account/changepassword')"><span style="color: #03a9f4;">{{arabicText.Change_Password}}</span></button>
+        </div>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Location form-->
+            <div formGroupName="accountData">
+                <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.Full_Name}}" [readonly]="!isEdit" formControlName="fullName">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].accountData['controls'].fullName.errors && form['controls'].accountData['controls'].fullName.errors.required">
+                            {{arabicText.errors.NAME_REQUIRED}} 
+                        </span>
+                    </div>
+                </div>
+            <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.EMAIL}}" [readonly]="'true'" formControlName="email">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].accountData['controls'].email.errors && form['controls'].accountData['controls'].email.errors.required">
+                            {{arabicText.errors.EMAIL_REQUIRED}}
+                        </span>
+                    </div>
+            </div>
+             <div class="input col-md-6">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.MOBILE}}" [readonly]="!isEdit" formControlName="mobile">
+                    </md-input-container>
+                    <div class="input validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].accountData['controls'].mobile.errors && form['controls'].accountData['controls'].mobile.errors.required">
+                            {{arabicText.errors.MOBILE_REQUIRED}} 
+                        </span>
+                    <span *ngIf="form['controls'].accountData['controls'].mobile.status == 'INVALID' && !form['controls'].accountData['controls'].mobile.errors.required">{{arabicText.Mobile_Invalid}}</span>
+
+                    </div>
+            </div> 
+        <div style="clear: both;"></div> 
+        </div>        
+        </form>
+    </div>
+</div>
+
+                  

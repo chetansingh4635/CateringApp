@@ -1,0 +1,63 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.Change_Password}}</span>
+        <div>
+            <button md-button  (click)="_router.navigateByUrl('/account')"><span style="color: #03a9f4;">{{arabicText.CANCEL}}</span></button>
+            <button md-button (click)="save()"><span style="color: #03a9f4;">{{arabicText.SAVE}}</span></button>
+        </div>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate autocomplete="off">
+                <div formGroupName="changePassword">
+                <div class="input col-md-4">
+                    <md-input-container>
+                        <input type="password" formControlName="oldPassword" mdInput placeholder="Old Password"
+                            validate-event="blur" />
+                    </md-input-container>
+                    <div class="input col-md-12 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].changePassword['controls'].oldPassword.errors && form['controls'].changePassword['controls'].oldPassword.errors.required">
+                            {{arabicText.errors.PASSWORD_REQUIRED}}  
+                        </span>
+                        <span *ngIf="form['controls'].changePassword['controls'].oldPassword.status == 'INVALID' && !form['controls'].changePassword['controls'].oldPassword.errors.required">
+                            {{arabicText.errors.PASSWORD_SHOULD_ATLEAST_CHARACTER}}
+                        </span>
+                    </div>
+                </div>
+                 <div class="input col-md-4">
+                    <md-input-container>
+                        <input  type="password" formControlName="newPassword" mdInput placeholder="New Password"
+                            validate-event="blur"  />
+                    </md-input-container>
+                    <div class="input col-md-12 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].changePassword['controls'].newPassword.errors && form['controls'].changePassword['controls'].newPassword.errors.required">
+                            {{arabicText.errors.PASSWORD_REQUIRED}}  
+                        </span>
+                        <span *ngIf="form['controls'].changePassword['controls'].newPassword.status == 'INVALID' && !form['controls'].changePassword['controls'].newPassword.errors.required">
+                            {{arabicText.errors.PASSWORD_SHOULD_ATLEAST_CHARACTER}}
+                        </span>
+                        <span *ngIf="form['controls'].changePassword && form['controls'].changePassword.hasError('oldNewPasswordSame') && !(form['controls'].changePassword['controls'].newPassword.errors && form['controls'].changePassword['controls'].newPassword.errors.required && form['controls'].changePassword['controls'].newPassword.status == 'INVALID')">
+                            Old password and new password cannot be same
+                        </span>
+                    </div>
+                </div>
+                <div class="input col-md-4">
+                    <md-input-container>
+                        <input type="password" formControlName="confirmPassword" mdInput placeholder="Confirm Password"
+                            validate-event="blur" />
+                    </md-input-container>
+                    <div class="input col-md-12 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].changePassword['controls'].confirmPassword.errors && form['controls'].changePassword['controls'].confirmPassword.errors.required">
+                            {{arabicText.errors.PASSWORD_REQUIRED}}  
+                        </span>
+                        <span *ngIf="form['controls'].changePassword && form['controls'].changePassword.hasError('confirmPasswordInvalid') && !(form['controls'].changePassword['controls'].confirmPassword.errors && form['controls'].changePassword['controls'].confirmPassword.errors.required)">
+                            {{arabicText.errors.New_Password_and_confirm_password_match}}
+                        </span>
+                    </div>
+                </div>
+                   </div>
+                   <div style="clear: both;"></div>
+            </form>
+    </div>
+</div>
+
+                  

@@ -1,0 +1,63 @@
+<div class="login-background">
+    <div class="theme-art">
+        <div class="logo centered">Tawtini Catering</div>
+        <img class="theme" src="../../assets/images/fisherman_cartoon.png" />
+    </div>
+    <div class="login-container flex-center children-center">
+        <div class="form-container place-holder-color" >
+            <form [formGroup]="form"  novalidate>
+                <div formGroupName="changePassword">
+                <div class="form-input centered">
+                    <md-input-container>
+                        <input type="password" formControlName="oldPassword" mdInput placeholder="{{arabicText.Old_Password}}"
+                            validate-event="blur" style="color: #ffffff;" />
+                    </md-input-container>
+                    <div class="form-validation-message" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form.controls.changePassword.controls.oldPassword.errors && form.controls.changePassword.controls.oldPassword.errors.required">
+                          {{arabicText.errors.Old_Password_is_required}}  
+                        </span>
+                        <span *ngIf="form.controls.changePassword.controls.oldPassword.status == 'INVALID' && !form.controls.changePassword.controls.oldPassword.errors.required">
+                           {{arabicText.errors.Old_Password_should_have_at_least_4_characters_and_atmost_15_characters}}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-input centered">
+                    <md-input-container>
+                        <input type="password" formControlName="newPassword" mdInput placeholder="{{arabicText.New_Password}}"
+                            validate-event="blur" style="color: #ffffff;" />
+                    </md-input-container>
+                    <div class="form-validation-message" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form.controls.changePassword.controls.newPassword.errors && form.controls.changePassword.controls.newPassword.errors.required">
+                          {{arabicText.errors.NEW_PASSWORD_REQUIRED}}  
+                        </span>
+                        <span *ngIf="form.controls.changePassword.controls.newPassword.status == 'INVALID' && !form.controls.changePassword.controls.newPassword.errors.required">
+                          {{arabicText.errors.New_Password_should_have_at_least_4_characters_and_atmost_15_characters}}
+                        </span>
+                        <span *ngIf="form.controls.changePassword && form.controls.changePassword.hasError('oldNewPasswordSame') && !(form.controls.changePassword.controls.newPassword.errors && form.controls.changePassword.controls.newPassword.errors.required && form.controls.changePassword.controls.newPassword.status == 'INVALID')">
+                           {{arabicText.errors.Old_password_and_new_password_cannot_be_same}}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-input centered">
+                    <md-input-container>
+                        <input type="password" formControlName="confirmPassword" mdInput placeholder="{{arabicText.Confirm_Password}}"
+                            validate-event="blur" style="color: #ffffff;" />
+                    </md-input-container>
+                    <div class="form-validation-message" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form.controls.changePassword.controls.confirmPassword.errors && form.controls.changePassword.controls.confirmPassword.errors.required">
+                           {{arabicText.errors.Confirm_Password_is_required}}  
+                        </span>
+                        <span *ngIf="form.controls.changePassword && form.controls.changePassword.hasError('confirmPasswordInvalid') && !(form.controls.changePassword.controls.confirmPassword.errors && form.controls.changePassword.controls.confirmPassword.errors.required)">
+                            {{arabicText.errors.New_Password_and_confirm_password_match}}
+                        </span>
+                    </div>
+                </div>
+             
+                <div class="form-submit centered">
+                    <button md-raised-button type="button" (click)="change()" [color]="'primary'"><span style="color: #ffffff;">{{arabicText.SIDE_MENU.MANAGE_CHANGE_PASSWORD}}</span></button>
+                </div>
+                   </div>
+            </form>
+        </div>
+    </div>
+</div>

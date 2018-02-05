@@ -1,0 +1,110 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666; width: 85%">{{title}}</span>
+        <button class="btn btn-primary pull-right" (click)="uploadImage()">{{arabicText.SAVE}} </button>
+        <button class="btn btn-default pull-right" (click)="cancel()"><span style="color: #666666;">{{arabicText.CANCEL}}</span></button>
+    </div>
+    <div class="form">
+        <form [formGroup]="form" novalidate>
+            <!--Business form-->
+            <div formGroupName="menuData">
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <input mdInput placeholder="{{arabicText.NAME}}" maxlength="40" formControlName="name" style="text-transform:capitalize">
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].menuData['controls'].name.errors && form['controls'].menuData['controls'].name.errors?.required">
+                        {{arabicText.errors.NAME_REQUIRED}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-12">
+                    <md-input-container>
+                        <textarea mdInput placeholder="{{arabicText.DESCRIPTION}}" rows="5" maxlength="500" formControlName="description"></textarea>
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].menuData['controls'].description.errors && form['controls'].menuData['controls'].description.errors?.required">
+                        {{arabicText.errors.Description_is_required}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-8">
+                    <md-input-container>
+                        <input mdInput type="number" placeholder="{{arabicText.Quantity_Price}}{{arabicText.SAR}}" formControlName="quantityPrice">
+                    </md-input-container>
+                    <div class="input col-md-6 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="form['controls'].menuData['controls'].quantityPrice.errors && form['controls'].menuData['controls'].quantityPrice.errors?.required">
+                        {{arabicText.Quantity_Price}}{{arabicText.SAR}}
+                    </span>
+                        <span *ngIf="form['controls'].menuData['controls'].quantityPrice.errors && form['controls'].menuData['controls'].quantityPrice.errors?.pattern && !form['controls'].menuData['controls'].quantityPrice.errors?.required">
+                        {{arabicText.Quantity_Price_between}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-4" style="margin-top: 5px;" *ngIf="specialPrices.length < 6">
+                    <button type="button" (click)="addSpecialPrice()" style="float: right;" class="btn btn-primary">{{arabicText.Add_Special_Price}}</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="input col-md-12" style="margin-top: 20px" *ngFor="let special of specialPrices;let i =index">
+                <div class="input col-md-4">
+                    <md-input-container>
+                        <input mdInput type="text" maxlength="40" #heading="ngModel" name="heading" required placeholder="{{arabicText.Heading}}" [(ngModel)]="specialPrices[i].heading">
+                    </md-input-container>
+                    <div class="input col-md-12 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="heading.errors && heading.errors.required">
+                        {{arabicText.Heading_Required}}
+                    </span>
+                    </div>
+                </div>
+                <div class="input col-md-4">
+                    <md-input-container>
+                        <input mdInput type="number" pattern="^(?:[1-9][0-9]{0,4}(?:\.\d{1,2})?|999999|99999.00)$" #price="ngModel" name="price" required placeholder="{{arabicText.PRICE}}{{arabicText.SAR}}" [(ngModel)]="specialPrices[i].price">
+                    </md-input-container>
+                    <div class="input col-md-12 validation" [ngClass]="{'invisible' : !submittedOnce}">
+                        <span *ngIf="price.errors && price.errors.required">
+                       {{arabicText.Price_Required}}
+                    </span>
+                        <span *ngIf="price.errors && !price.errors.required && price.errors.pattern">
+                         {{arabicText.Price_Must_Between}}
+                    </span>
+                    </div>
+                </div>
+            <div class="input col-md-4">
+                <button type="button" (click)="removeSpecialPrice(i)" style="float: right;" class="btn btn-primary">{{arabicText.Remove}}</button>
+            </div>
+        </div>
+        <!--Cover Image-->
+        <div class="col-md-6">
+            <div>
+                <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-weight: 600;">{{arabicText.COVER_IMAGE_SQUARE}}</span>
+                    <div>
+                        <button md-button (click)="clearImage(0)" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                    </div>
+                </div>
+                <div id="cover" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: auto 100%;background-repeat: no-repeat; height: 300px;"></div>
+                <input type="file" style="position: absolute; top: 51px; width: 100%; height: 300px; opacity: 0; cursor: pointer;" (change)="extractImage($event,0)"
+                />
+            </div>
+        </div>
+        <!--Cover Image Square-->
+        <!--<div class="col-md-6">
+            <div>
+                <div style="height: 51px; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-weight: 600;">{{arabicText.COVER_IMAGE_SQUARE}}</span>
+                    <div>
+                        <button md-button (click)="clearImage(1)" style="background-color: transparent; color: #888888">{{arabicText.CLEAR}}</button>
+                    </div>
+                </div>
+                <div id="coverImageSquare" style="background-image: url(../../../assets/images/img_placeholder.svg); background-size: auto 100%;background-repeat: no-repeat; height: 300px;"></div>
+                <input type="file" style="position: absolute; top: 51px; width: 100%; height: 300px; opacity: 0; cursor: pointer;" (change)="extractImage($event,1)"
+                />
+            </div>
+        </div>-->
+
+        <div style="clear: both;"></div>
+    </div>
+</div>
+<md-spinner *ngIf="showLoader" class="loader"></md-spinner>

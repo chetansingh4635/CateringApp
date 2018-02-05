@@ -1,0 +1,52 @@
+<div class="location-list">
+    <div class=toolbar>
+        <span style="font-weight: 400; font-size: large; color: #666666">{{arabicText.Manage_Feedback}}</span>
+        <div class="col-sm-4">
+            <md-select placeholder="{{arabicText.Select_category}}" [(ngModel)]="category" (change)="getFilteredFeedback({'page':1})">
+                <md-option [value]="">{{arabicText.ALL}}</md-option>
+                <md-option *ngFor="let category of categoryList" [value]="category">
+                  {{category == 'Food' ? arabicText.FOOD : category == 'Shop' ? arabicText.SHOP : category == 'Accomodation' ? arabicText.ACCOMODATION : '' }}
+                </md-option>
+            </md-select>
+        </div>
+        <div class="col-sm-4">
+            <md-select placeholder="{{arabicText.Pending_Active_Inactive}}" [(ngModel)]="status" (change)="getFilteredFeedback({'page':1})">
+                <md-option [value]="">{{arabicText.ALL}}</md-option>
+                <md-option [value]='"pending"'>{{arabicText.Pending}}</md-option>
+                <md-option [value]="true">{{arabicText.ACTIVE}}</md-option>
+                <md-option [value]="false">{{arabicText.Inactive}}</md-option>
+            </md-select>
+        </div>
+    </div>
+    
+    <div class="activity-cards">
+        <div class="col-md-4 card" *ngFor="let feedback of feedBackList; let i = index">
+            <md-card>
+                <md-card-title style="font-size: large;">
+                    <a style="text-decoration: none;">{{arabicText.Category}} : {{feedback.category}} <i class="glyphicon glyphicon-star-empty" style="float: right;" *ngIf="feedback.isPending" aria-hidden="true"></i>
+                    </a>
+                </md-card-title>
+                <md-card-subtitle><a style="text-decoration: none;">{{arabicText.User_Name}} : {{feedback.user.name}}
+                    </a><br><br><a style="text-decoration: none;">{{arabicText.Date_Of_arrival}} : {{feedback.createdAt | date: 'dd/MM/yyyy'}}</a>
+                </md-card-subtitle>
+                <md-card-content style="height: 165px;">
+                    <p style="overflow-y: auto;max-height:160px">{{arabicText.Message}} : {{feedback.comment}}</p>
+                </md-card-content>
+                <div style="height: 50px;">
+                    <a *ngFor="let image of feedback.images; let i = index;" (click)="openDialogImages(image,feedback)">
+                        <img style="cursor:pointer" class="card-image" md-card-lg-image [src]="getImagePath(image)" />
+                    </a>
+                </div>
+                <md-card-actions style="display: flex; align-items: center;    height: 70px;">
+                    <md-slide-toggle [color]="'primary'" [checked]="feedback.isActive" (change)="setActiveInactive($event,feedback)" style="display: inline-flex;    margin-left: 20px;">{{arabicText.ACTIVE}}</md-slide-toggle>
+                </md-card-actions>
+            </md-card>
+        </div>
+        <div class="col-sm-12" style="background-color: white; height: 40px;padding-top: 10px" *ngIf="feedBackList && feedBackList.length==0 && totalCount === 0">
+        <span>{{arabicText.No_Records_Found}}</span>
+        </div>
+        <div class="text-center col-md-12" *ngIf="feedBackList && feedBackList.length > 0">
+            <pagination [directionLinks]="true" [boundaryLinks]="true" [totalItems]="totalCount" [(ngModel)]="currentPage" (pageChanged)="getFilteredFeedback($event)"></pagination>
+        </div>
+    </div>
+</div>

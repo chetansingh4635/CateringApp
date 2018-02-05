@@ -1,0 +1,48 @@
+<div class="login-background">
+    <div class="theme-art">
+        <div class="logo centered">Tawtini</div>
+        <img class="theme" src="../../assets/images/fisherman_cartoon.png" />
+    </div>
+    <div class="login-container flex-center children-center">
+        <div class="form-container place-holder-color">
+            <form [formGroup]="form" novalidate>
+                <div formGroupName="resetPassword">
+                    <div class="form-input centered">
+                        <md-input-container>
+                            <input type="password" style="color: #ffffff;" formControlName="newPassword" mdInput placeholder="{{arabicText.New_Password}}"
+                                validate-event="blur" />
+                        </md-input-container>
+                        <div class="form-validation-message" [ngClass]="{'invisible' : !submittedOnce}">
+                            <span *ngIf="form['controls'].resetPassword['controls'].newPassword.errors && form['controls'].resetPassword['controls'].newPassword.errors.required">
+                          {{arabicText.errors.NEW_PASSWORD_REQUIRED}} 
+                        </span>
+                            <span *ngIf="form['controls'].resetPassword['controls'].newPassword.status == 'INVALID' && !form['controls'].resetPassword['controls'].newPassword.errors.required">
+                            {{arabicText.errors.PASSWORD_SHOULD_ATLEAST_CHARACTER}}
+                        </span>
+                        </div>
+                    </div>
+                    <div class="form-input centered">
+                        <md-input-container>
+                            <input type="password" style="color: #ffffff;" formControlName="confirmPassword" mdInput placeholder="{{arabicText.Confirm_Password}}"
+                                validate-event="blur" />
+                        </md-input-container>
+                        <div class="form-validation-message" [ngClass]="{'invisible' : !submittedOnce}">
+                            <span *ngIf="form['controls'].resetPassword['controls'].confirmPassword.errors && form['controls'].resetPassword['controls'].confirmPassword.errors.required">
+                          {{arabicText.errors.Confirm_Password_is_required}}  
+                        </span>
+                            <span *ngIf="form['controls'].resetPassword && form['controls'].resetPassword.hasError('confirmPasswordInvalid') && !(form['controls'].resetPassword['controls'].confirmPassword.errors && form['controls'].resetPassword['controls'].confirmPassword.errors.required)">
+                           {{arabicText.errors.New_Password_and_confirm_password_match}}
+                        </span>
+                        </div>
+                    </div>
+                    <div class="form-submit centered">
+                        <button md-raised-button type="button" (click)="resetPassword()" [color]="'primary'"><span style="color: #ffffff;">{{arabicText.Reset_Password}}</span></button>
+                    </div>
+                    <div style="padding:10px;text-align:right;width:100%">
+                        <a style="color: #ffffff;" routerLink="/login">{{arabicText.LOGIN}}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

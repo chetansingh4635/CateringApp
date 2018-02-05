@@ -1,0 +1,50 @@
+{
+  "name": "catering-app-business-admin",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --host 0.0.0.0 --port 4200",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "author": "Chetan Singh | Daffodil Software Ltd.",
+  "private": true,
+  "dependencies": {
+    "@angular/animation": "^4.0.0-beta.8",
+    "@angular/animations": "^4.0.3",
+    "@angular/common": "^4.0.3",
+    "@angular/compiler": "^4.0.3",
+    "@angular/core": "^4.0.3",
+    "@angular/forms": "^4.0.3",
+    "@angular/http": "^4.0.3",
+    "@angular/material": "^2.0.0-beta.5",
+    "@angular/platform-browser": "^4.0.3",
+    "@angular/platform-browser-dynamic": "^4.0.3",
+    "@angular/router": "^4.0.3",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.26",
+    "@types/youtube": "0.0.27",
+    "angular2-google-maps": "^0.17.0",
+    "bootstrap": "^3.3.7",
+    "config": "^1.25.1",
+    "core-js": "^2.4.1",
+    "cors": "^2.8.3",
+    "ng-pick-datetime": "^4.1.2",
+    "ng2-youtube-player": "0.0.2",
+    "ngx-bootstrap": "^1.7.1",
+    "ngx-pagination": "^3.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@angular/cli": "1.0.0",
+    "@angular/compiler-cli": "^4.0.0",
+    "@types/jasmine": "2.5.38",
+    "@types/node": "~6.0.60",
+    "ts-node": "~2.0.0",
+    "tslint": "~4.5.0",
+    "typescript": "~2.2.0"
+  }
+}
